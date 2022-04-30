@@ -14,6 +14,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzLayoutModule } from 'ng-zorro-antd/layout';
 import {NzButtonModule} from "ng-zorro-antd/button";
+import {NzRadioModule} from "ng-zorro-antd/radio";
 registerLocaleData(en);
 
 @NgModule({
@@ -28,7 +29,7 @@ registerLocaleData(en);
     NzTypographyModule,
     NzLayoutModule,
     NzInputModule,
-
+    NzRadioModule,
     NzButtonModule,
   ],
   providers: [{ provide: NZ_I18N, useValue: en_US }],

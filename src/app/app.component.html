@@ -1,37 +1,45 @@
-
 <nz-layout class="layout">
-  <nz-sider nzCollapsible nzBreakpoint="lg" [nzCollapsedWidth]="0">
-    <div class="logo"></div>
-    <ul nz-menu nzTheme="dark" nzMode="inline">
-      <li nz-menu-item>
-        <i nz-icon nzType="user"></i>
-        <span>nav 1</span>
-      </li>
-      <li nz-menu-item>
-        <i nz-icon nzType="video-camera"></i>
-        <span>nav 2</span>
-      </li>
-      <li nz-menu-item>
-        <i nz-icon nzType="upload"></i>
-        <span>nav 3</span>
-      </li>
-      <li nz-menu-item>
-        <i nz-icon nzType="user"></i>
-        <span>nav 4</span>
-      </li>
-    </ul>
-  </nz-sider>
   <nz-layout>
     <nz-header></nz-header>
     <nz-content>
-      <h1 nz-typography>熙丰楼</h1>
-      <div class="inner-content">欢迎来到西风楼！
+      <div>
+        <h3 nz-typography>欢迎来到西风楼！</h3>
         <nz-input-group nzSearch nzSize="large" [nzAddOnAfter]="suffixButton">
-          <input type="text" nz-input placeholder="您的名字是？" />
+          <input type="text" nz-input placeholder="您的名字是？" (keyup)="getName($event)" [(ngModel)]="username"/>
         </nz-input-group>
         <ng-template #suffixButton>
-          <button nz-button nzType="primary" nzSize="large" nzSearch>Confirm</button>
-        </ng-template></div>
+          <button nz-button nzType="primary" nzSize="large" nzSearch (click)="getName($event)">Confirm</button>
+        </ng-template>
+      </div>
+
+      <div>
+        <h3 nz-typography>本楼角妓有：</h3>
+        <nz-radio-group [(ngModel)]="jueji.name" nzButtonStyle="solid">
+          <label *ngFor="let ji of juejiMap" nz-radio-button nzValue="{{ji.name}}" (click)="jueji=ji">{{ji.name}}</label>
+        </nz-radio-group>
+        <h3 nz-typography>请{{username}}挑选您喜欢的西风少妇。</h3>
+
+
+        <h4 nz-typography>{{jueji.name}}今日已有约了。</h4>
+        <h4 nz-typography>{{jueji.name}}：奴身体不适，还是请{{jueji.friend[0]}}姐妹代劳吧～"</h4>
+      </div>
+
+      <div>
+        <h4 nz-typography>您选择和{{jueji.name}}:</h4>
+        <nz-radio-group [(ngModel)]="action" nzButtonStyle="solid">
+          <label nz-radio-button nzValue="A">饮酒</label>
+          <label nz-radio-button nzValue="B">闲谈</label>
+          <label nz-radio-button nzValue="C">合</label>
+        </nz-radio-group>
+
+        <div>
+
+          <h4 nz-typography>酒过三巡，你觉得兴致越发高涨。</h4>
+          <h4 nz-typography>酒喝得有点晕，你不禁开始担心今晚会不会心有余而力不足。</h4>
+        </div>
+
+      </div>
+
     </nz-content>
     <nz-footer>Ant Design ©2020 Implement By Angular</nz-footer>
   </nz-layout>
