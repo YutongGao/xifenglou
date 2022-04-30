@@ -25,7 +25,13 @@
     <nz-header></nz-header>
     <nz-content>
       <h1 nz-typography>熙丰楼</h1>
-      <div class="inner-content">Content</div>
+      <div class="inner-content">欢迎来到西风楼！
+        <nz-input-group nzSearch nzSize="large" [nzAddOnAfter]="suffixButton">
+          <input type="text" nz-input placeholder="您的名字是？" />
+        </nz-input-group>
+        <ng-template #suffixButton>
+          <button nz-button nzType="primary" nzSize="large" nzSearch>Confirm</button>
+        </ng-template></div>
     </nz-content>
     <nz-footer>Ant Design ©2020 Implement By Angular</nz-footer>
   </nz-layout>

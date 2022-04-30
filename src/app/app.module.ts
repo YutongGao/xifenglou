@@ -11,7 +11,9 @@ import { HttpClientModule } from '@angular/common/http';
 import { NzTypographyModule } from 'ng-zorro-antd/typography';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
+import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzLayoutModule } from 'ng-zorro-antd/layout';
+import {NzButtonModule} from "ng-zorro-antd/button";
 registerLocaleData(en);
 
 @NgModule({
@@ -24,7 +26,10 @@ registerLocaleData(en);
     HttpClientModule,
     BrowserAnimationsModule,
     NzTypographyModule,
-    NzLayoutModule
+    NzLayoutModule,
+    NzInputModule,
+
+    NzButtonModule,
   ],
   providers: [{ provide: NZ_I18N, useValue: en_US }],
   bootstrap: [AppComponent]
