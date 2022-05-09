@@ -8,7 +8,7 @@ export class JuejiGenerator{
     {
       name: "章七姐",
       friend: ['吕惠娘', '曾紫萱', '林惜惜'],
-      available: true
+      available: false
     },
   ];
   initJueji(){

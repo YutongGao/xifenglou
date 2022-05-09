@@ -16,7 +16,9 @@ export class AppComponent {
 
   stage1Name =true;
   stage2Select = false;
+  stage21No =false;
   stage3Action = false;
+  stage31Wine = false;
   ngInit() {
   }
 
@@ -27,5 +29,10 @@ export class AppComponent {
       this.stage1Name = false;
       this.stage2Select = true;
     }
+  }
+
+  toNext(){
+    this.stage2Select=false;
+    this.stage3Action=true
   }
 }

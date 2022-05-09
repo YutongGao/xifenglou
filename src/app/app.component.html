@@ -15,26 +15,27 @@
       <div *ngIf="stage2Select">
         <h3 nz-typography>本楼角妓有：</h3>
         <nz-radio-group [(ngModel)]="jueji.name" nzButtonStyle="solid">
-          <label *ngFor="let ji of juejiMap" nz-radio-button nzValue="{{ji.name}}" (click)="jueji=ji;stage2Select=false;stage3Action=true">{{ji.name}}</label>
+          <label *ngFor="let ji of juejiMap" nz-radio-button nzValue="{{ji.name}}" (click)="jueji=ji;jueji.available ? toNext(): false">{{ji.name}}</label>
           <label nz-radio-button (click)="stage2Select=false;stage1Name=true">返回</label>
         </nz-radio-group>
         <h3 nz-typography>请{{username}}挑选您喜欢的西风少妇。</h3>
 
-
-        <h4 nz-typography>{{jueji.name}}今日已有约了。</h4>
-        <h4 nz-typography>{{jueji.name}}：奴身体不适，还是请{{jueji.friend[0]}}姐妹代劳吧～"</h4>
+        <div *ngIf="!jueji.available">
+          <h4 nz-typography>{{jueji.name}}今日已有约了。</h4>
+          <h4 nz-typography>{{jueji.name}}：奴身体不适，还是请{{jueji.friend[0]}}姐妹代劳吧～"</h4>
+        </div>
       </div>
 
       <div *ngIf="stage3Action">
         <h4 nz-typography>您选择和{{jueji.name}}:</h4>
         <nz-radio-group [(ngModel)]="action" nzButtonStyle="solid">
-          <label nz-radio-button nzValue="A">饮酒</label>
+          <label nz-radio-button nzValue="A" (click)="stage31Wine=true">饮酒</label>
           <label nz-radio-button nzValue="B">闲谈</label>
           <label nz-radio-button nzValue="C">合</label>
           <label nz-radio-button (click)="stage2Select=true;stage3Action=false">返回</label>
         </nz-radio-group>
 
-        <div>
+        <div *ngIf="stage31Wine">
           <h4 nz-typography>酒过三巡，你觉得兴致越发高涨。</h4>
           <h4 nz-typography>酒喝得有点晕，你不禁开始担心今晚会不会心有余而力不足。</h4>
         </div>
