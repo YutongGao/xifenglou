@@ -31,17 +31,14 @@
           <label nz-radio-button nzValue="A">饮酒</label>
           <label nz-radio-button nzValue="B">闲谈</label>
           <label nz-radio-button nzValue="C">合</label>
+          <label nz-radio-button (click)="stage2Select=true;stage3Action=false">返回</label>
         </nz-radio-group>
 
         <div>
-
           <h4 nz-typography>酒过三巡，你觉得兴致越发高涨。</h4>
           <h4 nz-typography>酒喝得有点晕，你不禁开始担心今晚会不会心有余而力不足。</h4>
         </div>
-
       </div>
-
     </nz-content>
-    <nz-footer>Ant Design ©2020 Implement By Angular</nz-footer>
   </nz-layout>
 </nz-layout>
