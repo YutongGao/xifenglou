@@ -2,7 +2,7 @@
   <nz-layout>
     <nz-header></nz-header>
     <nz-content>
-      <div>
+      <div *ngIf="stage1Name">
         <h3 nz-typography>欢迎来到西风楼！</h3>
         <nz-input-group nzSearch nzSize="large" [nzAddOnAfter]="suffixButton">
           <input type="text" nz-input placeholder="您的名字是？" (keyup)="getName($event)" [(ngModel)]="username"/>
@@ -12,10 +12,11 @@
         </ng-template>
       </div>
 
-      <div>
+      <div *ngIf="stage2Select">
         <h3 nz-typography>本楼角妓有：</h3>
         <nz-radio-group [(ngModel)]="jueji.name" nzButtonStyle="solid">
-          <label *ngFor="let ji of juejiMap" nz-radio-button nzValue="{{ji.name}}" (click)="jueji=ji">{{ji.name}}</label>
+          <label *ngFor="let ji of juejiMap" nz-radio-button nzValue="{{ji.name}}" (click)="jueji=ji;stage2Select=false;stage3Action=true">{{ji.name}}</label>
+          <label nz-radio-button (click)="stage2Select=false;stage1Name=true">返回</label>
         </nz-radio-group>
         <h3 nz-typography>请{{username}}挑选您喜欢的西风少妇。</h3>
 
@@ -24,7 +25,7 @@
         <h4 nz-typography>{{jueji.name}}：奴身体不适，还是请{{jueji.friend[0]}}姐妹代劳吧～"</h4>
       </div>
 
-      <div>
+      <div *ngIf="stage3Action">
         <h4 nz-typography>您选择和{{jueji.name}}:</h4>
         <nz-radio-group [(ngModel)]="action" nzButtonStyle="solid">
           <label nz-radio-button nzValue="A">饮酒</label>

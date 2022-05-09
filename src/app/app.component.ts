@@ -14,6 +14,9 @@ export class AppComponent {
   username = "";
   action = '';
 
+  stage1Name =true;
+  stage2Select = false;
+  stage3Action = false;
   ngInit() {
   }
 
@@ -21,6 +24,8 @@ export class AppComponent {
     if (event.key === 'Enter' || event.type === 'click') {
       //show box
       console.log(event);
+      this.stage1Name = false;
+      this.stage2Select = true;
     }
   }
 }
