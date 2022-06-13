@@ -15,30 +15,51 @@
       <div *ngIf="stage2Select">
         <h3 nz-typography>本楼角妓有：</h3>
         <nz-radio-group [(ngModel)]="jueji.name" nzButtonStyle="solid">
-          <label *ngFor="let ji of juejiMap" nz-radio-button nzValue="{{ji.name}}" (click)="jueji=ji;jueji.available ? toNext(): false">{{ji.name}}</label>
+          <label *ngFor="let ji of juejiList" nz-radio-button nzValue="{{ji.name}}" (click)="jueji=ji;jueji.availability && jueji.substitution ? toNext(): false">{{ji.name}}</label>
           <label nz-radio-button (click)="stage2Select=false;stage1Name=true">返回</label>
         </nz-radio-group>
         <h3 nz-typography>请{{username}}挑选您喜欢的西风少妇。</h3>
 
-        <div *ngIf="!jueji.available">
+        <div *ngIf="!jueji.availability">
           <h4 nz-typography>{{jueji.name}}今日已有约了。</h4>
-          <h4 nz-typography>{{jueji.name}}：奴身体不适，还是请{{jueji.friend[0]}}姐妹代劳吧～"</h4>
+        </div>
+        <div *ngIf="jueji.availability && !jueji.substitution">
+          <h4 nz-typography>{{jueji.name}}：奴身体不适，还是请{{jueji.friend}}姐妹代劳吧～"</h4>
         </div>
       </div>
 
       <div *ngIf="stage3Action">
+        <h4 nz-typography>{{jueji.name}}在此。</h4>
         <h4 nz-typography>您选择和{{jueji.name}}:</h4>
         <nz-radio-group [(ngModel)]="action" nzButtonStyle="solid">
-          <label nz-radio-button nzValue="A" (click)="stage31Wine=true">饮酒</label>
-          <label nz-radio-button nzValue="B">闲谈</label>
-          <label nz-radio-button nzValue="C">合</label>
+          <label nz-radio-button nzValue="A" (click)="act(jueji, 'DRINK')">饮酒</label>
+          <label nz-radio-button nzValue="B" (click)="act(jueji, 'CHAT')">闲谈</label>
+          <label nz-radio-button nzValue="C" (click)="act(jueji, 'SEX')">合</label>
           <label nz-radio-button (click)="stage2Select=true;stage3Action=false">返回</label>
         </nz-radio-group>
 
-        <div *ngIf="stage31Wine">
-          <h4 nz-typography>酒过三巡，你觉得兴致越发高涨。</h4>
-          <h4 nz-typography>酒喝得有点晕，你不禁开始担心今晚会不会心有余而力不足。</h4>
+        <div *ngIf="stage3Drink">
+          <h4 nz-typography *ngIf="actionDrink">酒过三巡，你觉得兴致越发高涨。</h4>
+          <h4 nz-typography *ngIf="!actionDrink">酒喝得有点晕，你不禁开始担心今晚会不会心有余而力不足。</h4>
         </div>
+        <div *ngIf="stage3Chat">
+          <h4 nz-typography *ngIf="actionChat">{{bagua}}</h4>
+          <h4 nz-typography *ngIf="actionChat">{{jueji.name}}:" 官人可知，{{this.visitor}}也常来这里呢～"</h4>
+          <h4 nz-typography *ngIf="actionChat">{{jueji.chat}}</h4>
+          <h4 nz-typography *ngIf="actionChat">你们聊的十分投机，渐入佳境。</h4>
+          <h4 nz-typography *ngIf="!actionChat">闲谈之际，你们不经意间聊到了{{topic}}, 观点不合吵了起来。你们都有些闷闷不乐。</h4>
+        </div>
+        <div *ngIf="stage3Sex">
+          <h4 nz-typography>{{jueji.name}}合起了帷幕。</h4>
+          <h4 nz-typography *ngIf="actionSex">交欢之际，{{sexEvent.key}}</h4>
+          <h4 nz-typography *ngIf="actionSex && sexEvent.value > 0">你不禁大喜，兴致++</h4>
+          <h4 nz-typography *ngIf="actionSex && sexEvent.value < 0">你有些无语，兴致--</h4>
+          <h4 nz-typography *ngIf="!actionSex">鸳鸯帐里，烛影双龙戏...</h4>
+        </div>
+      </div>
+      <div *ngIf="stage4End">
+        <h4 nz-typography *ngIf="stage4EndTime">天亮了。请您明天再来吧～</h4>
+        <h4 nz-typography *ngIf="stage4EndGG">GG:天亮了。请您明天再来吧～</h4>
       </div>
     </nz-content>
   </nz-layout>
