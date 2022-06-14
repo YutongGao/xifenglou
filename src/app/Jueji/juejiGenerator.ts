@@ -1,9 +1,10 @@
-import {juejiList} from "./data/juejiList";
+import {juejiList} from "./juejiDataList/juejiList";
 import {Jueji} from "./jueji";
-import {friendList} from "./data/friendList";
-import {EventList} from "./event/eventList";
-import {chatList} from "./event/chat/chatList";
-import {sexList} from "./event/sexList";
+import {friendList} from "./juejiDataList/friendList";
+import {EventList} from "./juejiDataList/eventList";
+import {chatList} from "./event/eventDataList/personalizedDataList/chatList";
+import {sexList} from "./event/eventDataList/personalizedDataList/sexList";
+import {juejiEndList} from "./event/eventDataList/personalizedDataList/juejiEndList";
 
 export class JuejiGenerator{
 
@@ -19,6 +20,7 @@ export class JuejiGenerator{
       jueji.event = new EventList();
       jueji.event.chat = (chatList as any)[name];
       jueji.event.sex = (sexList as any)[name];
+      jueji.event.end = (juejiEndList as any)[name];
       juejiObjectList.push(jueji);
     }
     return juejiObjectList;

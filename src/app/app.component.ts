@@ -1,10 +1,13 @@
 import {Component} from '@angular/core';
 import {JuejiGenerator} from "./Jueji/juejiGenerator";
-import {juejiList} from "./Jueji/data/juejiList";
-import {visitorList} from "./Jueji/event/chat/visitorList";
-import {baguaList} from "./Jueji/event/chat/baguaList";
-import {topicList} from "./Jueji/event/chat/topicList";
-import {EventList} from "./Jueji/event/eventList";
+import {juejiList} from "./Jueji/juejiDataList/juejiList";
+import {visitorList} from "./Jueji/event/eventDataList/visitorList";
+import {baguaList} from "./Jueji/event/eventDataList/baguaList";
+import {topicList} from "./Jueji/event/eventDataList/topicList";
+import {EventList} from "./Jueji/juejiDataList/eventList";
+import {Jueji} from "./Jueji/jueji";
+import {JuejiEvent} from "./Jueji/event/juejiEvent";
+import {endList} from "./Jueji/event/eventDataList/endList";
 
 @Component({
   selector: 'app-root',
@@ -15,21 +18,11 @@ export class AppComponent {
   title = 'xifeng';
   generator = new JuejiGenerator();
   juejiList = this.generator.initJueji();
-  jueji= {
-    name: '',
-    availability: true,
-    substitution: true,
-    friends: ['default'],
-    friend: '',
-    event: new EventList(),
-    count: 0,
-    chat:''
-  };
+  juejiStage2 = new Jueji();
+  juejiStage3 = new Jueji();
   username = "";
   action = '';
 
-  visitor = '';
-  bagua ='';
   topic = '';
   sexEvent = {
     key: '',
@@ -40,81 +33,85 @@ export class AppComponent {
   stage2Select = false;
   stage3Action = false;
 
-  stage3Drink = false;
-  actionDrink = true;
-
-  stage3Chat = false;
-  actionChat = true;
-
-  stage3Sex = false;
-  actionSex = true;
-
   stage4End = false;
   stage4EndTime = false;
   stage4EndGG = false;
+
+  eventList: JuejiEvent[]= [];
 
   ngInit() {
   }
 
   getName(event: any) {
     if (event.key === 'Enter' || event.type === 'click') {
-      //show box
-      console.log(event);
-      this.stage1Name = false;
       this.stage2Select = true;
     }
   }
 
   toNext(){
-    this.stage2Select=false;
     this.stage3Action=true
+    if(this.juejiStage2.substitution){
+      this.juejiStage3 = this.juejiList.filter(res => res.name === this.juejiStage2.friend)[0];
+    } else{
+      this.juejiStage3 = this.juejiStage2;
+    }
   }
 
   act(jueji: any, action: string){
     if(jueji.count > 15){
-      this.stage3Action=false
       this.stage4End = true;
       this.stage4EndTime = true;
     }
     jueji.count++;
-    this.stage3Drink = false;
-    this.stage3Chat = false;
-    this.stage3Sex = false;
+    let tempEvent = new JuejiEvent();
     switch (action){
       case 'DRINK':
-        this.stage3Drink=true;
-        this.actionDrink = Math.random() < 0.5;
-        if(this.actionDrink){
+        tempEvent.isDrink = true;
+        if(Math.random() < 0.5){
           jueji.xingzhi *= 1.25;
+          tempEvent.eventText = '酒过三巡，你觉得兴致越发高涨。\n';
         } else{
+          tempEvent.eventText = '酒喝得有点晕，你不禁开始担心今晚会不会心有余而力不足。\n';
           jueji.xingzhi *= 0.75;
         }
         break;
       case 'CHAT':
-        this.stage3Chat=true;
-        this.actionChat = Math.random() < 0.75;
-        if(this.actionChat){
+        tempEvent.isChat = true;
+        if(Math.random() < 0.75){
           jueji.xingzhi *= 1.1;
-          this.visitor = visitorList[Math.floor(Math.random()*visitorList.length)];
-          this.bagua = baguaList[Math.floor(Math.random()*baguaList.length)];
-          this.jueji.chat = this.jueji.event.chat[Math.floor(Math.random()*this.jueji.event.chat.length)];
+          let visitor = visitorList[Math.floor(Math.random()*visitorList.length)];
+          let tempBagua = [...baguaList, ...this.juejiStage3.event.chat, jueji.name + ':" 官人可知，' + visitor + '也常来这里呢～"'];
+          tempEvent.eventText = tempBagua[Math.floor(Math.random()* tempBagua.length)];
+          tempEvent.eventText += '\n' + '你们聊的十分投机，渐入佳境。\n';
         } else{
           jueji.xingzhi *= 0.75;
-          this.topic = topicList[Math.floor(Math.random()*topicList.length)];
+          let topic = topicList[Math.floor(Math.random()*topicList.length)];
+          tempEvent.eventText = '闲谈之际，你们不经意间聊到了' + topic + ', 观点不合吵了起来。你们都有些闷闷不乐。\n';
         }
         break;
       case 'SEX':
-        this.stage3Sex=true;
-        this.actionSex = Math.random() < 0.5;
-        if(this.actionSex){
-          this.sexEvent = this.jueji.event.sex[Math.floor(Math.random()*this.jueji.event.sex.length)];
-          jueji.xingzhi *= (1 + this.sexEvent.value);
+        tempEvent.isSex = true;
+        tempEvent.eventText += this.juejiStage3.name + '合起了帷幕。\n';
+        if(Math.random() < 0.5){
+          let sexEvent = this.juejiStage3.event.sex[Math.floor(Math.random()*this.juejiStage3.event.sex.length)];
+          tempEvent.eventText += '交欢之际，' + sexEvent.key + '\n';
+          tempEvent.eventText += sexEvent.value > 0 ? '你不禁大喜，兴致++\n': '你有些无语，兴致--\n';
+            jueji.xingzhi *= (1 + this.sexEvent.value);
         } else{
-          this.stage3Sex=false;
-          this.stage4End = true;
-          this.stage4EndGG = true;
+          tempEvent.eventText += '鸳鸯帐里，烛影双龙戏...\n'
+          if(Math.random() < 0.3){
+            let tempReason = [...endList, ...this.juejiStage3.event.end];
+            tempEvent.eventText += tempReason[Math.floor(Math.random()* tempReason.length)];
+            this.stage4End = true;
+            this.stage4EndGG = true;
+          }
         }
         break;
     }
+    this.eventList.push(tempEvent);
+  }
+
+  reload(){
+    location.reload();
   }
 }

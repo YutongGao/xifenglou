@@ -1,11 +1,10 @@
-import {EventList} from "./event/eventList";
-import {friendList} from "./data/friendList";
+import {EventList} from "./juejiDataList/eventList";
+import {friendList} from "./juejiDataList/friendList";
 
 export class Jueji {
   name: string;
   friends: string[];
   friend: string;
-  chat: string;
   availability: boolean;
   substitution: boolean;
   event: EventList;
@@ -13,11 +12,10 @@ export class Jueji {
 
   constructor() {
     this.name = '';
-    this.friends = [];
+    this.friends = ['default'];
     this.friend = '';
-    this.chat = '';
     this.availability = true;
-    this.substitution = true;
+    this.substitution = false;
     this.event = new EventList();
     this.count = 0;
   }
