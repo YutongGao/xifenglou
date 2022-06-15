@@ -21,9 +21,7 @@ export class AppComponent {
   juejiStage2 = new Jueji();
   juejiStage3 = new Jueji();
   username = "";
-  action = '';
 
-  topic = '';
   sexEvent = {
     key: '',
     value: 0

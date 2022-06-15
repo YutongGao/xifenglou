@@ -15,6 +15,7 @@ import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzLayoutModule } from 'ng-zorro-antd/layout';
 import {NzButtonModule} from "ng-zorro-antd/button";
 import {NzRadioModule} from "ng-zorro-antd/radio";
+import {NzTagModule} from "ng-zorro-antd/tag";
 registerLocaleData(en);
 
 @NgModule({
@@ -31,6 +32,7 @@ registerLocaleData(en);
     NzInputModule,
     NzRadioModule,
     NzButtonModule,
+    NzTagModule,
   ],
   providers: [{ provide: NZ_I18N, useValue: en_US }],
   bootstrap: [AppComponent]

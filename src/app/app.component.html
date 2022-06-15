@@ -14,10 +14,9 @@
 
       <div *ngIf="stage2Select">
         <h3 nz-typography>本楼角妓有：</h3>
-        <nz-radio-group [(ngModel)]="juejiStage2.name" nzButtonStyle="solid"   *ngIf="!stage3Action">
-          <label *ngFor="let ji of juejiList" nz-radio-button nzValue="{{ji.name}}" (click)="juejiStage2=ji;juejiStage2.availability ? toNext(): false">{{ji.name}}</label>
-          <label nz-radio-button (click)="stage2Select=false;stage1Name=true">返回</label>
-        </nz-radio-group>
+        <div  *ngIf="!stage3Action">
+          <nz-tag *ngFor="let ji of juejiList" (click)="juejiStage2=ji;juejiStage2.availability ? toNext(): false">{{ji.name}}</nz-tag>
+        </div>
         <h3 nz-typography>请{{username}}挑选您喜欢的西风少妇。</h3>
 
         <div *ngIf="!juejiStage2.availability">
@@ -36,12 +35,11 @@
             <h4 nz-typography>{{event.eventText}}</h4>
           </div>
         </div>
-        <nz-radio-group [(ngModel)]="action" nzButtonStyle="solid" *ngIf="!stage4End">
-          <label nz-radio-button nzValue="A" (click)="act(juejiStage3, 'DRINK')">饮酒</label>
-          <label nz-radio-button nzValue="B" (click)="act(juejiStage3, 'CHAT')">闲谈</label>
-          <label nz-radio-button nzValue="C" (click)="act(juejiStage3, 'SEX')">合</label>
-          <label nz-radio-button (click)="stage2Select=true;stage3Action=false">返回</label>
-        </nz-radio-group>
+        <div>
+          <nz-tag  (click)="act(juejiStage3, 'DRINK')">饮酒</nz-tag>
+          <nz-tag  (click)="act(juejiStage3, 'CHAT')">闲谈</nz-tag>
+          <nz-tag  (click)="act(juejiStage3, 'SEX')">合</nz-tag>
+        </div>
 
       </div>
       <div *ngIf="stage4End">
