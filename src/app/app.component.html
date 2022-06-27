@@ -3,7 +3,7 @@
     <nz-header></nz-header>
     <nz-content>
       <div *ngIf="stage1Name">
-        <h3 nz-typography>欢迎{{username}}来到西风楼！</h3>
+        <p nz-typography>欢迎{{username}}来到西风楼！</p>
         <nz-input-group nzSearch nzSize="large" [nzAddOnAfter]="suffixButton"  *ngIf="!stage2Select">
           <input type="text" nz-input placeholder="您的名字是？" (keyup)="getName($event)" [(ngModel)]="username"/>
         </nz-input-group>
@@ -13,26 +13,26 @@
       </div>
 
       <div *ngIf="stage2Select">
-        <h3 nz-typography>本楼角妓有：</h3>
+        <p nz-typography>本楼角妓有：</p>
         <div  *ngIf="!stage3Action">
           <nz-tag *ngFor="let ji of juejiList" (click)="juejiStage2=ji;juejiStage2.availability ? toNext(): false">{{ji.name}}</nz-tag>
         </div>
-        <h3 nz-typography>请{{username}}挑选您喜欢的西风少妇。</h3>
+        <p nz-typography>请{{username}}挑选您喜欢的西风少妇。</p>
 
         <div *ngIf="!juejiStage2.availability">
-          <h4 nz-typography>{{juejiStage2.name}}今日已有约了。</h4>
+          <p nz-typography>{{juejiStage2.name}}今日已有约了。</p>
         </div>
         <div *ngIf="juejiStage2.availability && juejiStage2.substitution">
-          <h4 nz-typography>{{juejiStage2.name}}：奴身体不适，还是请{{juejiStage2.friend}}姐妹代劳吧～"</h4>
+          <p nz-typography>{{juejiStage2.name}}：奴身体不适，还是请{{juejiStage2.friend}}姐妹代劳吧～"</p>
         </div>
       </div>
 
       <div *ngIf="stage3Action">
-        <h4 nz-typography>{{juejiStage3.name}}在此。</h4>
-        <h4 nz-typography>您选择和{{juejiStage3.name}}:</h4>
+        <p nz-typography>{{juejiStage3.name}}在此。</p>
+        <p nz-typography>您选择和{{juejiStage3.name}}:</p>
         <div *ngFor="let event of eventList">
           <div *ngIf="event.isDrink || event.isChat || event.isSex">
-            <h4 nz-typography>{{event.eventText}}</h4>
+            <p nz-typography>{{event.eventText}}</p>
           </div>
         </div>
         <div>
@@ -43,7 +43,7 @@
 
       </div>
       <div *ngIf="stage4End">
-        <h4 nz-typography *ngIf="stage4EndTime">天亮了。请您明天再来吧～</h4>
+        <p nz-typography *ngIf="stage4EndTime">天亮了。请您明天再来吧～</p>
         <nz-radio-group nzButtonStyle="solid" *ngIf="stage4End">
           <label nz-radio-button (click)="reload()">重来</label>
         </nz-radio-group>
